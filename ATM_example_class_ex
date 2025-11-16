@@ -1,0 +1,107 @@
+class BankAccount:
+    def __init__(self, account_number, pin, balance=0):
+        self.account_number = account_number
+        self.pin = pin
+        self.balance = balance
+        self.pin_attempts = 0
+        self.is_frozen = False
+
+    def validate_pin(self, entered_pin):
+        if self.is_frozen:
+            print("Card is frozen. Please contact the bank.")
+            return False
+
+        if entered_pin == self.pin:
+            self.pin_attempts = 0
+            return True
+        else:
+            self.pin_attempts += 1
+            print("Incorrect PIN.")
+
+            if self.pin_attempts >= 3:
+                self.is_frozen = True
+                print("Card has been frozen due to too many incorrect attempts.")
+            return False
+
+    def deposit(self, amount):
+        self.balance += amount
+        print(f"Deposited ${amount}. New balance: ${self.balance}")
+
+    def withdraw(self, amount):
+        if amount > self.balance:
+            print("Insufficient funds.")
+        else:
+            self.balance -= amount
+            print(f"Withdrew ${amount}. New balance: ${self.balance}")
+
+    def show_balance(self):
+        print(f"Current balance: ${self.balance}")
+        
+
+
+
+class ATM:
+    def __init__(self, account):
+        self.account = account
+
+    def insert_card(self):
+        print("Card Inserted.")
+        return True
+
+    def enter_pin(self):
+        pin = input("Enter PIN: ")
+        return self.account.validate_pin(pin)
+
+    def select_transaction(self):
+        print("Choose Transaction:")
+        print("1 - Deposit")
+        print("2 - Withdrawal")
+        print("3 - Check Balance")
+        print("4 - Quit")
+
+        choice = input("Select option: ")
+        return choice
+
+    def perform_transaction(self, choice):
+        if choice == "1":
+            amount = float(input("Enter deposit amount: "))
+            self.account.deposit(amount)
+
+        elif choice == "2":
+            amount = float(input("Enter withdrawal amount: "))
+            self.account.withdraw(amount)
+
+        elif choice == "3":
+            self.account.show_balance()
+        
+        elif choice == "4":
+            return
+
+        else:
+            print("Invalid or unimplemented option.")
+
+    def session(self):
+        if not self.insert_card():
+            return
+
+        if not self.enter_pin():
+            return
+
+        done = False
+        while not done:
+            choice = self.select_transaction()
+            self.perform_transaction(choice)
+
+            done_yet = input("Are you done? (yes/no): ").lower()
+            if done_yet == "yes":
+                logout = input("Confirm logout? (yes/no): ").lower()
+                if logout == "yes":
+                    print("Logging out... Goodbye!")
+                    done_yet = True
+                    return
+
+
+# Example Run
+account = BankAccount("123456", "1234", 500000)
+atm = ATM(account)
+atm.session()

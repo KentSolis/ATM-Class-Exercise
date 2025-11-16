@@ -7,9 +7,9 @@ This part can also be the section that handles a nested switch/if statements to 
 
 Psuedo Code/basic outline:
 
-#simplified what makes a bank account unique to an acount number, a pin, and balance
-# did not include name becuase I could not think of any situations when an ATM interacts with that aside from displaying it
-# also, seperating this from ATM functions simplifies from having too many nested if/else statements I saw when working on group effort
+simplified what makes a bank account unique to an acount number, a pin, and balance
+did not include name becuase I could not think of any situations when an ATM interacts with that aside from displaying it
+also, seperating this from ATM functions simplifies from having too many nested if/else statements I saw when working on group effort
 
 class BankAccount:
   def __init__(self, account_number, pin, balance)
@@ -27,7 +27,7 @@ class BankAccount:
     print balance
 
 
-#decided to split the "at the ATM" actions you perfomr for this Class to inherit BankAccount functions/balance/info
+decided to split the "at the ATM" actions you perfomr for this Class to inherit BankAccount functions/balance/info
 
 Class ATM
   def__init__(self, account)
@@ -54,13 +54,13 @@ Class ATM
     check for card input, 
     check for pin entered,
 
-    have a done_yet check, takes input from user, if yes, exits 
+  done_yet check, takes input from user, if yes, exits 
 
   have some users/accounts to fill to BankAccount:
 
   simple one could be:
 
-  account = BankAccount(account number, pin, balance)
+  account = BankAccount(account number, pin, balance), 
   atm = ATM(account)
   print (values) ??
 
